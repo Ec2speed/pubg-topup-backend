@@ -10,8 +10,16 @@ app.use(express.json());
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URL)
-  .then(() => console.log("MongoDB Connected"))
-  .catch(err => console.log(err));
+  .then(() => {
+    console.log("MongoDB Connected");
+
+    app.listen(process.env.PORT || 5000, () => {
+      console.log("Server running");
+    });
+  })
+  .catch(err => {
+    console.error("MongoDB error:", err);
+  });
 
 // File Upload Setup
 const storage = multer.diskStorage({
